@@ -59,19 +59,17 @@ module.exports = {
           if (!user) {
             return res.status(404).json({ message: 'No user exists!' })
           }
+
           console.log(user)
-          // const thought = '';
-        //   const thought = await Thought.findAndDelete(
-        //     { students: req.params.studentId },
-        //     { $pull: { students: req.params.studentId } },
-        //     { new: true }
-        //   );
+          const thoughts = await Thought.deleteMany(
+            { username: user.username },
+          );
     
-          // if (!thought) {
-          //   return res.status(404).json({
-          //     message: 'User deleted, but no thoughts found',
-          //   });
-          // }
+          if (!thoughts) {
+            return res.status(404).json({
+              message: 'User deleted, but no thoughts found',
+            });
+          }
     
           res.json({ message: 'User successfully deleted' });
         } catch (err) {
